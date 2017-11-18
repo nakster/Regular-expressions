@@ -32,14 +32,14 @@ func main() {
 	fmt.Println("\nI am happy.")
 	fmt.Println(elizaResponse("I am happy."))
 	//question 7
-	fmt.Println("\nI am not happy with your responses.")
-	fmt.Println(elizaResponse("I am not happy with your responses."))
+	fmt.Println("\nI'm not happy with your responses.")
+	fmt.Println(elizaResponse("I'm not happy with your responses."))
 	//question 8
-	fmt.Println("\nI am not sure that you understand the effect that your questions are having on me.")
-	fmt.Println(elizaResponse("I am not sure that you understand the effect that your questions are having on me."))
+	fmt.Println("\nIm not sure that you understand the effect that your questions are having on me.")
+	fmt.Println(elizaResponse("Im not sure that you understand the effect that your questions are having on me."))
 	//question 9
-	fmt.Println("\nI am supposed to just take what you’re saying at face value?")
-	fmt.Println(elizaResponse("I am supposed to just take what you’re saying at face value?"))
+	fmt.Println("\nI AM supposed to just take what you’re saying at face value?")
+	fmt.Println(elizaResponse("I AM supposed to just take what you’re saying at face value?"))
 
 }
 
@@ -59,7 +59,9 @@ func elizaResponse(takeInput string) string {
 	}
 
 	//if the input does not contain the word “father”, check the input begins with “I am “
-	re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+	//re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
+	//Adapt the function to respond in the same way as with “i am “, “I AM “, “I’m “, “Im “, “i’m “
+	re := regexp.MustCompile(`(?i)i(?:'|\sa)?m (.*)`)
 
 	if matchedIAM := re.MatchString(takeInput); matchedIAM {
 
