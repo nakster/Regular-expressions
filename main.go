@@ -1,9 +1,12 @@
 package main
 
+//https://shapeshed.com/golang-regexp/
+//imports
 import (
 	"fmt"
 	"math/rand"
 	"regexp"
+	"strings"
 	"time"
 )
 
@@ -59,13 +62,37 @@ func elizaResponse(takeInput string) string {
 	}
 
 	//if the input does not contain the word “father”, check the input begins with “I am “
-	//re := regexp.MustCompile(`(?i)I am ([^.?!]*)[.?!]?`)
 	//Adapt the function to respond in the same way as with “i am “, “I AM “, “I’m “, “Im “, “i’m “
 	re := regexp.MustCompile(`(?i)i(?:'|\sa)?m (.*)`)
+	deleteIAm := re.FindStringSubmatch(takeInput)
 
-	if matchedIAM := re.MatchString(takeInput); matchedIAM {
+	// List the reflections.
+	reflections := [][]string{
+		{"your", "my"},
+		{"you’re", "i am"},
+		{"I", "you"},
+		{"you", "I"},
+		{"me", "you"},
+	}
 
-		return re.ReplaceAllString(takeInput, "How do you know you are $1?")
+	if len(deleteIAm) > 0 {
+
+		splitInput := strings.Split(deleteIAm[1], " ")
+
+		// Loop through each word, reflecting it if there's a match.
+		for i, check := range splitInput {
+			for _, reflection := range reflections {
+				if matched, _ := regexp.MatchString(reflection[0], check); matched {
+					splitInput[i] = reflection[1]
+					break
+				}
+			}
+		}
+
+		// Put the string back together.
+		joinString := strings.Join(splitInput, " ")
+
+		return fmt.Sprintf("How do you know you are %s?", joinString)
 
 	}
 
