@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"regexp"
 	"time"
 )
 
@@ -39,6 +40,11 @@ var response = []string{
 
 // takes a single string as input and returns a single string as output
 func elizaResponse(takeInput string) string {
+
+	//check, using a regular expression, if the input contains the word “father”.
+	if matched, _ := regexp.MatchString(`(?i).*\bfather\b.*`, takeInput); matched {
+		return "Why don’t you tell me more about your father?"
+	}
 
 	//return one of the following three strings.
 	return response[rand.Intn(len(response))]
