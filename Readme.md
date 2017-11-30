@@ -3,9 +3,9 @@
 #### Running the code
 
 >- Clone this repository using Git.
-> - git clone https://github.com/nakster/GoProject.git or Download Repository
+> - git clone https://github.com/nakster/Regular-expressions.git or Download Repository
 > - Change into the folder.
-> - cd GoProject
+> - cd Regular-expressions
 > - Compile the web application with the following command.
 > - go build main.go
 > - Run the executable produced.
