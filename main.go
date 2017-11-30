@@ -43,10 +43,11 @@ func main() {
 	//question 9
 	fmt.Println("\nI AM supposed to just take what you’re saying at face value?")
 	fmt.Println(elizaResponse("I AM supposed to just take what you’re saying at face value?"))
-
+	//part 6 questions 
 	fmt.Println("\nGood Morning")
 	fmt.Println(elizaResponse("Good Morning"))
-
+	fmt.Println("\nHello")
+	fmt.Println(elizaResponse("Hello"))
 }
 
 //The function should randomly return one of the following three strings.
@@ -108,7 +109,10 @@ func elizaResponse(takeInput string) string {
 		return choice(responseToGoodM)
 	}
 
-
+	//part 6(2)
+	if matched, _ := regexp.MatchString(`(?i).*\bhello\b.*`, takeInput); matched {
+		return choice(greetings)
+	}
 
 	//return one of the following three strings from the string array.
 	return choice(response)
@@ -120,6 +124,12 @@ var responseToGoodM = []string{
 	"Good Morning to you to",
 	"Good Morning, how are you today?",
 	"Bonjour having a nice day?",
+}
+//this stores response to hello
+var greetings = []string{
+	"How are you?",
+	"How are you doing?",
+	"Are you having a good day?",
 }
 
 //this func returns a random string from the array
