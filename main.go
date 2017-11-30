@@ -1,5 +1,5 @@
 package main
-
+//adapted from https://gist.github.com/ianmcloughlin/c4c2b8dc586d06943f54b75d9e2250fe
 //https://shapeshed.com/golang-regexp/
 //imports
 import (
@@ -43,6 +43,9 @@ func main() {
 	//question 9
 	fmt.Println("\nI AM supposed to just take what you’re saying at face value?")
 	fmt.Println(elizaResponse("I AM supposed to just take what you’re saying at face value?"))
+
+	fmt.Println("\nGood Morning")
+	fmt.Println(elizaResponse("Good Morning"))
 
 }
 
@@ -96,7 +99,31 @@ func elizaResponse(takeInput string) string {
 
 	}
 
-	//return one of the following three strings from the string array.
-	return response[rand.Intn(len(response))]
+	//part 6(1)
+	//make it lower case for find answer better
+	takeInput = strings.TrimRight(takeInput, "\n.!")
+	takeInput = strings.ToLower(takeInput)
 
+	if matched, _ := regexp.MatchString(`(?i).*\bgood morning\b.*`, takeInput); matched {
+		return choice(responseToGoodM)
+	}
+
+
+
+	//return one of the following three strings from the string array.
+	return choice(response)
+
+}
+
+//this stores response to good morning
+var responseToGoodM = []string{
+	"Good Morning to you to",
+	"Good Morning, how are you today?",
+	"Bonjour having a nice day?",
+}
+
+//this func returns a random string from the array
+func choice(ls []string) string {
+	randnum := rand.Intn(len(ls))
+	return ls[randnum]
 }
