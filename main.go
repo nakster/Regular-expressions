@@ -48,6 +48,10 @@ func main() {
 	fmt.Println(elizaResponse("Good Morning"))
 	fmt.Println("\nHello")
 	fmt.Println(elizaResponse("Hello"))
+	fmt.Println("\nI need help")
+	fmt.Println(elizaResponse("I need help"))
+	fmt.Println("\nWhy don't you like me?")
+	fmt.Println(elizaResponse("Why don't you like me?"))
 }
 
 //The function should randomly return one of the following three strings.
@@ -114,6 +118,28 @@ func elizaResponse(takeInput string) string {
 		return choice(greetings)
 	}
 
+	//part 6(3)
+	for respond, res := range Responses {
+		re := regexp.MustCompile(respond)
+		matches := re.FindStringSubmatch(takeInput)
+
+		// If the statement matched any recognizable statements.
+		if len(matches) > 0 {
+			// If we matched a regex group in parentheses, get the first match.
+			var fragment string
+			if len(matches) > 1 {
+				fragment = matches[1]
+			}
+			// Choose a random appropriate response, and format it with the
+			// fragment, if needed.
+			response := choice(res)
+			if strings.Contains(response, "%s") {
+				response = fmt.Sprintf(response, fragment)
+			}
+			return response
+		}
+	}
+
 	//return one of the following three strings from the string array.
 	return choice(response)
 
@@ -130,6 +156,19 @@ var greetings = []string{
 	"How are you?",
 	"How are you doing?",
 	"Are you having a good day?",
+}
+//responses map 
+var Responses = map[string][]string{
+	`i need (.*)`: {
+		"How can i help you?",
+		"Do you think wanting %s is going to help you?",
+		"Are you sure you need %s?",
+	},
+	`why don'?t you ([^\?]*)\??`: {
+		"Do you think i don't %s?",
+		"Do you really want me to %s?",
+	},
+
 }
 
 //this func returns a random string from the array
